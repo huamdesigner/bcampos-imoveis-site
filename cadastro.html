@@ -1,478 +1,412 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 
-<head>
+<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
+<meta name="description" content="Cadastro de clientes - BCampos Imóveis">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastro | BCampos Imóveis</title>
 
-    <meta name="description"
-        content="Cadastro de clientes - BCampos Imóveis">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <title>Cadastro | BCampos Imóveis</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="css/style.css">
 
-    <link rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin>
+<style>
+    .cadastro-page {
+        min-height: calc(100vh - 82px);
+        padding: 80px 0;
+        background: linear-gradient(135deg, #f7f8fa, #eef0f3);
+    }
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans:wght@400;500;600&display=swap"
-        rel="stylesheet">
+    .cadastro-container {
+        max-width: 700px;
+        margin: 0 auto;
+    }
 
-    <link rel="stylesheet" href="css/style.css">
+    .cadastro-header {
+        text-align: center;
+        margin-bottom: 35px;
+    }
 
-    <style>
+    .cadastro-header h1 {
+        margin-top: 10px;
+        color: #172d5a;
+        font-family: "Montserrat", sans-serif;
+        font-size: 40px;
+    }
 
+    .cadastro-header p {
+        margin-top: 12px;
+        color: #5d6572;
+    }
+
+    .cadastro-box {
+        padding: 40px;
+        background: #ffffff;
+        border-radius: 14px;
+        box-shadow: 0 15px 40px rgba(13, 28, 59, 0.10);
+    }
+
+    .form-grupo {
+        margin-bottom: 22px;
+    }
+
+    .form-grupo label {
+        display: block;
+        margin-bottom: 7px;
+        color: #172d5a;
+        font-weight: 700;
+    }
+
+    .form-grupo input {
+        width: 100%;
+        min-height: 50px;
+        padding: 0 15px;
+        border: 1px solid #d4d8df;
+        border-radius: 7px;
+        font-family: "Open Sans", sans-serif;
+        font-size: 15px;
+        outline: none;
+        box-sizing: border-box;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form-grupo input:focus {
+        border-color: #31558f;
+        box-shadow: 0 0 0 3px rgba(49, 85, 143, 0.10);
+    }
+
+    .btn-cadastro {
+        width: 100%;
+        min-height: 52px;
+        border: 0;
+        border-radius: 7px;
+        background: #b5262d;
+        color: #ffffff;
+        font-family: "Montserrat", sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn-cadastro:hover {
+        background: #941d24;
+        transform: translateY(-2px);
+    }
+
+    .btn-cadastro:disabled {
+        opacity: 0.7;
+        cursor: wait;
+        transform: none;
+    }
+
+    .voltar {
+        display: block;
+        width: fit-content;
+        margin: 25px auto 0;
+        color: #172d5a;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .voltar:hover {
+        color: #b5262d;
+    }
+
+    #mensagemCadastro {
+        display: none;
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 7px;
+        text-align: center;
+    }
+
+    @media (max-width: 600px) {
         .cadastro-page {
-
-            min-height: calc(100vh - 82px);
-
-            padding: 80px 0;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #f7f8fa,
-                    #eef0f3
-                );
-
+            padding: 50px 0;
         }
-
-
-        .cadastro-container {
-
-            max-width: 700px;
-
-            margin: 0 auto;
-
-        }
-
-
-        .cadastro-header {
-
-            text-align: center;
-
-            margin-bottom: 35px;
-
-        }
-
-
-        .cadastro-header h1 {
-
-            margin-top: 10px;
-
-            color: #172d5a;
-
-            font-family: "Montserrat", sans-serif;
-
-            font-size: 40px;
-
-        }
-
-
-        .cadastro-header p {
-
-            margin-top: 12px;
-
-            color: #5d6572;
-
-        }
-
 
         .cadastro-box {
-
-            padding: 40px;
-
-            background: #ffffff;
-
-            border-radius: 14px;
-
-            box-shadow:
-                0 15px 40px
-                rgba(13, 28, 59, 0.10);
-
+            padding: 25px 20px;
         }
 
-
-        .form-grupo {
-
-            margin-bottom: 22px;
-
+        .cadastro-header h1 {
+            font-size: 30px;
         }
-
-
-        .form-grupo label {
-
-            display: block;
-
-            margin-bottom: 7px;
-
-            color: #172d5a;
-
-            font-weight: 700;
-
-        }
-
-
-        .form-grupo input {
-
-            width: 100%;
-
-            min-height: 50px;
-
-            padding: 0 15px;
-
-            border:
-                1px solid #d4d8df;
-
-            border-radius: 7px;
-
-            font-family:
-                "Open Sans",
-                sans-serif;
-
-            font-size: 15px;
-
-            outline: none;
-
-            transition:
-                border-color 0.2s ease,
-                box-shadow 0.2s ease;
-
-        }
-
-
-        .form-grupo input:focus {
-
-            border-color: #31558f;
-
-            box-shadow:
-                0 0 0 3px
-                rgba(49, 85, 143, 0.10);
-
-        }
-
-
-        .btn-cadastro {
-
-            width: 100%;
-
-            min-height: 52px;
-
-            border: 0;
-
-            border-radius: 7px;
-
-            background: #b5262d;
-
-            color: #ffffff;
-
-            font-family:
-                "Montserrat",
-                sans-serif;
-
-            font-size: 15px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-
-            transition:
-                background 0.2s ease,
-                transform 0.2s ease;
-
-        }
-
-
-        .btn-cadastro:hover {
-
-            background: #941d24;
-
-            transform:
-                translateY(-2px);
-
-        }
-
-
-        .voltar {
-
-            display: block;
-
-            width: fit-content;
-
-            margin: 25px auto 0;
-
-            color: #172d5a;
-
-            font-weight: 700;
-
-        }
-
-
-        .voltar:hover {
-
-            color: #b5262d;
-
-        }
-
-
-        #mensagemCadastro {
-
-            display: none;
-
-            margin-top: 20px;
-
-            padding: 15px;
-
-            border-radius: 7px;
-
-            background: #e8f7ef;
-
-            color: #176b3c;
-
-            text-align: center;
-
-        }
-
-
-        @media (max-width: 600px) {
-
-            .cadastro-page {
-
-                padding: 50px 0;
-
-            }
-
-
-            .cadastro-box {
-
-                padding: 25px 20px;
-
-            }
-
-
-            .cadastro-header h1 {
-
-                font-size: 30px;
-
-            }
-
-        }
-
-    </style>
+    }
+</style>
 
 </head>
 
-
 <body>
 
+<header class="header">
 
-    <!-- CABEÇALHO -->
+    <div class="container header-content">
 
-    <header class="header">
+        <a href="index.html" class="logo">
 
-        <div class="container header-content">
+            <span class="logo-b">B</span>
 
-            <a href="index.html" class="logo">
+            <span>
+                CAMPO<span class="logo-red">S</span>
+            </span>
 
-                <span class="logo-b">B</span>
+            <small>IMÓVEIS</small>
 
-                <span>
-                    CAMPO<span class="logo-red">S</span>
-                </span>
+        </a>
 
-                <small>
-                    IMÓVEIS
-                </small>
+        <a href="index.html" class="btn btn-primary">
+            Voltar ao site
+        </a>
 
-            </a>
+    </div>
 
+</header>
 
-            <a href="index.html"
-                class="btn btn-primary">
+<main class="cadastro-page">
 
-                Voltar ao site
+    <div class="container cadastro-container">
+
+        <div class="cadastro-header">
+
+            <span class="section-label">
+                BCAMPOS IMÓVEIS
+            </span>
+
+            <h1>
+                Cadastre-se
+            </h1>
+
+            <p>
+                Faça seu cadastro para fazer parte
+                do nosso projeto.
+            </p>
+
+        </div>
+
+        <div class="cadastro-box">
+
+            <form id="cadastroForm">
+
+                <div class="form-grupo">
+
+                    <label for="nomeCliente">
+                        Nome completo
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nomeCliente"
+                        name="nomeCliente"
+                        placeholder="Digite seu nome completo"
+                        required>
+
+                </div>
+
+                <div class="form-grupo">
+
+                    <label for="emailCliente">
+                        E-mail
+                    </label>
+
+                    <input
+                        type="email"
+                        id="emailCliente"
+                        name="emailCliente"
+                        placeholder="Digite seu e-mail"
+                        required>
+
+                </div>
+
+                <div class="form-grupo">
+
+                    <label for="telefoneCliente">
+                        Telefone
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="telefoneCliente"
+                        name="telefoneCliente"
+                        placeholder="(31) 99999-9999"
+                        required>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn-cadastro"
+                    id="botaoCadastro">
+
+                    Quero me cadastrar
+
+                </button>
+
+                <div id="mensagemCadastro"></div>
+
+            </form>
+
+            <a
+                href="index.html"
+                class="voltar">
+
+                ← Voltar para a página inicial
 
             </a>
 
         </div>
 
-    </header>
+    </div>
 
+</main>
 
-    <!-- CADASTRO -->
-
-    <main class="cadastro-page">
-
-        <div class="container cadastro-container">
-
-
-            <div class="cadastro-header">
-
-                <span class="section-label">
-                    BCAMPOS IMÓVEIS
-                </span>
-
-                <h1>
-                    Cadastre-se
-                </h1>
-
-                <p>
-                    Faça seu cadastro para fazer parte
-                    do nosso projeto.
-                </p>
-
-            </div>
-
-
-            <div class="cadastro-box">
-
-                <form id="cadastroForm">
-
-
-                    <div class="form-grupo">
-
-                        <label for="nomeCliente">
-                            Nome completo
-                        </label>
-
-                        <input
-                            type="text"
-                            id="nomeCliente"
-                            name="nomeCliente"
-                            placeholder="Digite seu nome completo"
-                            required>
-
-                    </div>
-
-
-                    <div class="form-grupo">
-
-                        <label for="emailCliente">
-                            E-mail
-                        </label>
-
-                        <input
-                            type="email"
-                            id="emailCliente"
-                            name="emailCliente"
-                            placeholder="Digite seu e-mail"
-                            required>
-
-                    </div>
-
-
-                    <div class="form-grupo">
-
-                        <label for="telefoneCliente">
-                            Telefone
-                        </label>
-
-                        <input
-                            type="tel"
-                            id="telefoneCliente"
-                            name="telefoneCliente"
-                            placeholder="(31) 99999-9999"
-                            required>
-
-                    </div>
-
-
-                    <button
-                        type="submit"
-                        class="btn-cadastro">
-
-                        Quero me cadastrar
-
-                    </button>
-
-
-                    <div id="mensagemCadastro">
-
-                        Cadastro preenchido com sucesso!
-
-                    </div>
-
-
-                </form>
-
-
-                <a
-                    href="index.html"
-                    class="voltar">
-
-                    ← Voltar para a página inicial
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </main>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-    const SUPABASE_URL = "https://smktdcolcyiylcnppzrb.supabase.co";
 
-    const SUPABASE_KEY = "sb_publishable_SUA_CHAVE_AQUI";
+    const SUPABASE_URL =
+        "https://smktdcolcyiylcnppzrb.supabase.co";
 
-    const supabaseClient = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
+   const SUPABASE_KEY =
+    "sb_publishable_r5zjiheogq2h5JyRCQknvg_uqW8b8Wm";
 
-    const cadastroForm = document.getElementById("cadastroForm");
-    const mensagem = document.getElementById("mensagemCadastro");
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
 
-    cadastroForm.addEventListener("submit", async function(event) {
+    const cadastroForm =
+        document.getElementById("cadastroForm");
 
-        event.preventDefault();
+    const mensagem =
+        document.getElementById("mensagemCadastro");
 
-        const nome = document.getElementById("nomeCliente").value.trim();
-        const email = document.getElementById("emailCliente").value.trim();
-        const telefone = document.getElementById("telefoneCliente").value.trim();
+    const botaoCadastro =
+        document.getElementById("botaoCadastro");
 
-        mensagem.style.display = "block";
-        mensagem.textContent = "Enviando cadastro...";
+    cadastroForm.addEventListener(
+        "submit",
+        async function(event) {
 
-        const { data, error } = await supabaseClient
-            .from("clientes")
-            .insert([
-                {
-                    nome: nome,
-                    email: email,
-                    telefone: telefone
-                }
-            ]);
+            event.preventDefault();
 
-        if (error) {
+            const nome =
+                document
+                    .getElementById("nomeCliente")
+                    .value
+                    .trim();
 
-            console.error("Erro ao cadastrar:", error);
+            const email =
+                document
+                    .getElementById("emailCliente")
+                    .value
+                    .trim();
+
+            const telefone =
+                document
+                    .getElementById("telefoneCliente")
+                    .value
+                    .trim();
+
+            mensagem.style.display = "block";
+
+            mensagem.style.background = "#fff3cd";
+
+            mensagem.style.color = "#856404";
 
             mensagem.textContent =
-                "Não foi possível realizar o cadastro. Tente novamente.";
+                "Enviando cadastro...";
 
-            mensagem.style.color = "red";
+            botaoCadastro.disabled = true;
 
-            return;
+            botaoCadastro.textContent =
+                "Enviando...";
+
+            try {
+
+                const { error } =
+                    await supabaseClient
+                        .from("clientes")
+                        .insert([
+                            {
+                                nome: nome,
+                                email: email,
+                                telefone: telefone
+                            }
+                        ]);
+
+                if (error) {
+
+                    console.error(
+                        "Erro ao cadastrar:",
+                        error
+                    );
+
+                    mensagem.style.background =
+                        "#f8d7da";
+
+                    mensagem.style.color =
+                        "#842029";
+
+                    mensagem.textContent =
+                        "Não foi possível realizar o cadastro. Tente novamente.";
+
+                    return;
+
+                }
+
+                mensagem.style.background =
+                    "#e8f7ef";
+
+                mensagem.style.color =
+                    "#176b3c";
+
+                mensagem.textContent =
+                    "Cadastro realizado com sucesso!";
+
+                cadastroForm.reset();
+
+            }
+
+            catch (erro) {
+
+                console.error(
+                    "Erro inesperado:",
+                    erro
+                );
+
+                mensagem.style.background =
+                    "#f8d7da";
+
+                mensagem.style.color =
+                    "#842029";
+
+                mensagem.textContent =
+                    "Ocorreu um erro. Tente novamente.";
+
+            }
+
+            finally {
+
+                botaoCadastro.disabled = false;
+
+                botaoCadastro.textContent =
+                    "Quero me cadastrar";
+
+            }
+
         }
 
-        mensagem.textContent =
-            "Cadastro realizado com sucesso!";
+    );
 
-        mensagem.style.color = "green";
-
-        cadastroForm.reset();
-
-    });
 </script>
-
 
 </body>
 
