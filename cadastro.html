@@ -2,13 +2,18 @@
 
 <html lang="pt-BR">
 
-<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <meta name="description" content="Cadastro de clientes - BCampos Imóveis">
 
 <title>Cadastro | BCampos Imóveis</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -16,6 +21,7 @@
 <link rel="stylesheet" href="css/style.css">
 
 <style>
+
     .cadastro-page {
         min-height: calc(100vh - 82px);
         padding: 80px 0;
@@ -124,9 +130,11 @@
         padding: 15px;
         border-radius: 7px;
         text-align: center;
+        font-weight: 600;
     }
 
     @media (max-width: 600px) {
+
         .cadastro-page {
             padding: 50px 0;
         }
@@ -138,7 +146,9 @@
         .cadastro-header h1 {
             font-size: 30px;
         }
+
     }
+
 </style>
 
 </head>
@@ -205,6 +215,8 @@
                         id="nomeCliente"
                         name="nomeCliente"
                         placeholder="Digite seu nome completo"
+                        autocomplete="name"
+                        minlength="3"
                         required>
 
                 </div>
@@ -220,6 +232,7 @@
                         id="emailCliente"
                         name="emailCliente"
                         placeholder="Digite seu e-mail"
+                        autocomplete="email"
                         required>
 
                 </div>
@@ -235,6 +248,8 @@
                         id="telefoneCliente"
                         name="telefoneCliente"
                         placeholder="(31) 99999-9999"
+                        autocomplete="tel"
+                        maxlength="15"
                         required>
 
                 </div>
@@ -270,141 +285,335 @@
 
 <script>
 
-    const SUPABASE_URL =
-        "https://smktdcolcyiylcnppzrb.supabase.co";
+/* ==========================================
+   SUPABASE
+========================================== */
 
-   const SUPABASE_KEY =
+const SUPABASE_URL =
+    "https://smktdcolcyiylcnppzrb.supabase.co";
+
+const SUPABASE_KEY =
     "sb_publishable_r5zjiheogq2h5JyRCQknvg_uqW8b8Wm";
 
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
-    const cadastroForm =
-        document.getElementById("cadastroForm");
 
-    const mensagem =
-        document.getElementById("mensagemCadastro");
+/* ==========================================
+   ELEMENTOS
+========================================== */
 
-    const botaoCadastro =
-        document.getElementById("botaoCadastro");
+const cadastroForm =
+    document.getElementById("cadastroForm");
 
-    cadastroForm.addEventListener(
-        "submit",
-        async function(event) {
+const mensagem =
+    document.getElementById("mensagemCadastro");
 
-            event.preventDefault();
+const botaoCadastro =
+    document.getElementById("botaoCadastro");
 
-            const nome =
-                document
-                    .getElementById("nomeCliente")
-                    .value
-                    .trim();
+const campoNome =
+    document.getElementById("nomeCliente");
 
-            const email =
-                document
-                    .getElementById("emailCliente")
-                    .value
-                    .trim();
+const campoEmail =
+    document.getElementById("emailCliente");
 
-            const telefone =
-                document
-                    .getElementById("telefoneCliente")
-                    .value
-                    .trim();
+const campoTelefone =
+    document.getElementById("telefoneCliente");
 
-            mensagem.style.display = "block";
 
-            mensagem.style.background = "#fff3cd";
+/* ==========================================
+   MÁSCARA DO TELEFONE
+========================================== */
 
-            mensagem.style.color = "#856404";
+campoTelefone.addEventListener(
+    "input",
+    function () {
 
-            mensagem.textContent =
-                "Enviando cadastro...";
+        let telefone =
+            campoTelefone.value.replace(/\D/g, "");
 
-            botaoCadastro.disabled = true;
+        if (telefone.length > 11) {
+            telefone = telefone.substring(0, 11);
+        }
 
-            botaoCadastro.textContent =
-                "Enviando...";
+        if (telefone.length <= 10) {
 
-            try {
-
-                const { error } =
-                    await supabaseClient
-                        .from("clientes")
-                        .insert([
-                            {
-                                nome: nome,
-                                email: email,
-                                telefone: telefone
-                            }
-                        ]);
-
-                if (error) {
-
-                    console.error(
-                        "Erro ao cadastrar:",
-                        error
-                    );
-
-                    mensagem.style.background =
-                        "#f8d7da";
-
-                    mensagem.style.color =
-                        "#842029";
-
-                    mensagem.textContent =
-                        "Não foi possível realizar o cadastro. Tente novamente.";
-
-                    return;
-
-                }
-
-                mensagem.style.background =
-                    "#e8f7ef";
-
-                mensagem.style.color =
-                    "#176b3c";
-
-                mensagem.textContent =
-                    "Cadastro realizado com sucesso!";
-
-                cadastroForm.reset();
-
-            }
-
-            catch (erro) {
-
-                console.error(
-                    "Erro inesperado:",
-                    erro
+            telefone =
+                telefone.replace(
+                    /^(\d{2})(\d)/,
+                    "($1) $2"
                 );
 
-                mensagem.style.background =
-                    "#f8d7da";
+            telefone =
+                telefone.replace(
+                    /(\d{4})(\d)/,
+                    "$1-$2"
+                );
 
-                mensagem.style.color =
-                    "#842029";
+        } else {
 
-                mensagem.textContent =
-                    "Ocorreu um erro. Tente novamente.";
+            telefone =
+                telefone.replace(
+                    /^(\d{2})(\d)/,
+                    "($1) $2"
+                );
 
-            }
-
-            finally {
-
-                botaoCadastro.disabled = false;
-
-                botaoCadastro.textContent =
-                    "Quero me cadastrar";
-
-            }
+            telefone =
+                telefone.replace(
+                    /(\d{5})(\d)/,
+                    "$1-$2"
+                );
 
         }
 
-    );
+        campoTelefone.value = telefone;
+
+    }
+);
+
+
+/* ==========================================
+   MENSAGEM
+========================================== */
+
+function mostrarMensagem(
+    texto,
+    tipo
+) {
+
+    mensagem.style.display = "block";
+
+    if (tipo === "sucesso") {
+
+        mensagem.style.background = "#e8f7ef";
+        mensagem.style.color = "#176b3c";
+
+    }
+
+    else if (tipo === "erro") {
+
+        mensagem.style.background = "#f8d7da";
+        mensagem.style.color = "#842029";
+
+    }
+
+    else {
+
+        mensagem.style.background = "#fff3cd";
+        mensagem.style.color = "#856404";
+
+    }
+
+    mensagem.textContent = texto;
+
+}
+
+
+/* ==========================================
+   CADASTRO
+========================================== */
+
+cadastroForm.addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
+
+
+        const nome =
+            campoNome.value.trim();
+
+        const email =
+            campoEmail.value.trim().toLowerCase();
+
+        const telefone =
+            campoTelefone.value.trim();
+
+
+        /* ==================================
+           VALIDA NOME
+        ================================== */
+
+        if (nome.length < 3) {
+
+            mostrarMensagem(
+                "Digite seu nome completo.",
+                "erro"
+            );
+
+            campoNome.focus();
+
+            return;
+
+        }
+
+
+        /* ==================================
+           VALIDA E-MAIL
+        ================================== */
+
+        const emailValido =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+        if (!emailValido.test(email)) {
+
+            mostrarMensagem(
+                "Digite um e-mail válido.",
+                "erro"
+            );
+
+            campoEmail.focus();
+
+            return;
+
+        }
+
+
+        /* ==================================
+           VALIDA TELEFONE
+        ================================== */
+
+        const telefoneNumeros =
+            telefone.replace(/\D/g, "");
+
+
+        if (
+            telefoneNumeros.length < 10 ||
+            telefoneNumeros.length > 11
+        ) {
+
+            mostrarMensagem(
+                "Digite um telefone válido.",
+                "erro"
+            );
+
+            campoTelefone.focus();
+
+            return;
+
+        }
+
+
+        /* ==================================
+           ENVIO
+        ================================== */
+
+        mostrarMensagem(
+            "Enviando cadastro...",
+            "carregando"
+        );
+
+
+        botaoCadastro.disabled = true;
+
+        botaoCadastro.textContent =
+            "Enviando...";
+
+
+        try {
+
+
+            const { error } =
+                await supabaseClient
+                    .from("clientes")
+                    .insert([
+                        {
+                            nome: nome,
+                            email: email,
+                            telefone: telefone
+                        }
+                    ]);
+
+
+            /* ==================================
+               ERRO
+            ================================== */
+
+            if (error) {
+
+                console.error(
+                    "Erro Supabase:",
+                    error
+                );
+
+
+                /*
+                 * E-MAIL DUPLICADO
+                 *
+                 * O código 23505 significa
+                 * violação de UNIQUE.
+                 */
+
+                if (error.code === "23505") {
+
+                    mostrarMensagem(
+                        "Este e-mail já está cadastrado.",
+                        "erro"
+                    );
+
+                }
+
+                else {
+
+                    mostrarMensagem(
+                        "Não foi possível realizar o cadastro. Tente novamente.",
+                        "erro"
+                    );
+
+                }
+
+
+                return;
+
+            }
+
+
+            /* ==================================
+               SUCESSO
+            ================================== */
+
+            mostrarMensagem(
+                "Cadastro realizado com sucesso!",
+                "sucesso"
+            );
+
+
+            cadastroForm.reset();
+
+
+        }
+
+        catch (erro) {
+
+            console.error(
+                "Erro inesperado:",
+                erro
+            );
+
+
+            mostrarMensagem(
+                "Ocorreu um erro. Tente novamente.",
+                "erro"
+            );
+
+        }
+
+        finally {
+
+            botaoCadastro.disabled = false;
+
+            botaoCadastro.textContent =
+                "Quero me cadastrar";
+
+        }
+
+    }
+);
 
 </script>
 
