@@ -415,32 +415,63 @@
     </main>
 
 
-    <script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        const cadastroForm =
-            document.getElementById("cadastroForm");
+<script>
+    const SUPABASE_URL = "https://smktdcolcyiylcnppzrb.supabase.co";
 
+    const SUPABASE_KEY = "sb_publishable_SUA_CHAVE_AQUI";
 
-        const mensagem =
-            document.getElementById("mensagemCadastro");
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
+    const cadastroForm = document.getElementById("cadastroForm");
+    const mensagem = document.getElementById("mensagemCadastro");
 
-        cadastroForm.addEventListener(
-            "submit",
-            function(event) {
+    cadastroForm.addEventListener("submit", async function(event) {
 
-                event.preventDefault();
+        event.preventDefault();
 
+        const nome = document.getElementById("nomeCliente").value.trim();
+        const email = document.getElementById("emailCliente").value.trim();
+        const telefone = document.getElementById("telefoneCliente").value.trim();
 
-                mensagem.style.display = "block";
+        mensagem.style.display = "block";
+        mensagem.textContent = "Enviando cadastro...";
 
+        const { data, error } = await supabaseClient
+            .from("clientes")
+            .insert([
+                {
+                    nome: nome,
+                    email: email,
+                    telefone: telefone
+                }
+            ]);
 
-                cadastroForm.reset();
+        if (error) {
 
-            }
-        );
+            console.error("Erro ao cadastrar:", error);
 
-    </script>
+            mensagem.textContent =
+                "Não foi possível realizar o cadastro. Tente novamente.";
+
+            mensagem.style.color = "red";
+
+            return;
+        }
+
+        mensagem.textContent =
+            "Cadastro realizado com sucesso!";
+
+        mensagem.style.color = "green";
+
+        cadastroForm.reset();
+
+    });
+</script>
 
 
 </body>
