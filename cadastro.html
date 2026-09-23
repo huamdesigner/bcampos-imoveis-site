@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="Cadastro de clientes - BCampos Imóveis">
+
+    <title>Cadastro | BCampos Imóveis</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        .cadastro-page {
+
+            min-height: calc(100vh - 82px);
+
+            padding: 80px 0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f7f8fa,
+                    #eef0f3
+                );
+
+        }
+
+
+        .cadastro-container {
+
+            max-width: 700px;
+
+            margin: 0 auto;
+
+        }
+
+
+        .cadastro-header {
+
+            text-align: center;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .cadastro-header h1 {
+
+            margin-top: 10px;
+
+            color: #172d5a;
+
+            font-family: "Montserrat", sans-serif;
+
+            font-size: 40px;
+
+        }
+
+
+        .cadastro-header p {
+
+            margin-top: 12px;
+
+            color: #5d6572;
+
+        }
+
+
+        .cadastro-box {
+
+            padding: 40px;
+
+            background: #ffffff;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(13, 28, 59, 0.10);
+
+        }
+
+
+        .form-grupo {
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .form-grupo label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #172d5a;
+
+            font-weight: 700;
+
+        }
+
+
+        .form-grupo input {
+
+            width: 100%;
+
+            min-height: 50px;
+
+            padding: 0 15px;
+
+            border:
+                1px solid #d4d8df;
+
+            border-radius: 7px;
+
+            font-family:
+                "Open Sans",
+                sans-serif;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+
+        }
+
+
+        .form-grupo input:focus {
+
+            border-color: #31558f;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(49, 85, 143, 0.10);
+
+        }
+
+
+        .btn-cadastro {
+
+            width: 100%;
+
+            min-height: 52px;
+
+            border: 0;
+
+            border-radius: 7px;
+
+            background: #b5262d;
+
+            color: #ffffff;
+
+            font-family:
+                "Montserrat",
+                sans-serif;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+
+        }
+
+
+        .btn-cadastro:hover {
+
+            background: #941d24;
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        .voltar {
+
+            display: block;
+
+            width: fit-content;
+
+            margin: 25px auto 0;
+
+            color: #172d5a;
+
+            font-weight: 700;
+
+        }
+
+
+        .voltar:hover {
+
+            color: #b5262d;
+
+        }
+
+
+        #mensagemCadastro {
+
+            display: none;
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            border-radius: 7px;
+
+            background: #e8f7ef;
+
+            color: #176b3c;
+
+            text-align: center;
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .cadastro-page {
+
+                padding: 50px 0;
+
+            }
+
+
+            .cadastro-box {
+
+                padding: 25px 20px;
+
+            }
+
+
+            .cadastro-header h1 {
+
+                font-size: 30px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- CABEÇALHO -->
+
+    <header class="header">
+
+        <div class="container header-content">
+
+            <a href="index.html" class="logo">
+
+                <span class="logo-b">B</span>
+
+                <span>
+                    CAMPO<span class="logo-red">S</span>
+                </span>
+
+                <small>
+                    IMÓVEIS
+                </small>
+
+            </a>
+
+
+            <a href="index.html"
+                class="btn btn-primary">
+
+                Voltar ao site
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- CADASTRO -->
+
+    <main class="cadastro-page">
+
+        <div class="container cadastro-container">
+
+
+            <div class="cadastro-header">
+
+                <span class="section-label">
+                    BCAMPOS IMÓVEIS
+                </span>
+
+                <h1>
+                    Cadastre-se
+                </h1>
+
+                <p>
+                    Faça seu cadastro para fazer parte
+                    do nosso projeto.
+                </p>
+
+            </div>
+
+
+            <div class="cadastro-box">
+
+                <form id="cadastroForm">
+
+
+                    <div class="form-grupo">
+
+                        <label for="nomeCliente">
+                            Nome completo
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nomeCliente"
+                            name="nomeCliente"
+                            placeholder="Digite seu nome completo"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-grupo">
+
+                        <label for="emailCliente">
+                            E-mail
+                        </label>
+
+                        <input
+                            type="email"
+                            id="emailCliente"
+                            name="emailCliente"
+                            placeholder="Digite seu e-mail"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-grupo">
+
+                        <label for="telefoneCliente">
+                            Telefone
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="telefoneCliente"
+                            name="telefoneCliente"
+                            placeholder="(31) 99999-9999"
+                            required>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn-cadastro">
+
+                        Quero me cadastrar
+
+                    </button>
+
+
+                    <div id="mensagemCadastro">
+
+                        Cadastro preenchido com sucesso!
+
+                    </div>
+
+
+                </form>
+
+
+                <a
+                    href="index.html"
+                    class="voltar">
+
+                    ← Voltar para a página inicial
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        const cadastroForm =
+            document.getElementById("cadastroForm");
+
+
+        const mensagem =
+            document.getElementById("mensagemCadastro");
+
+
+        cadastroForm.addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+
+                mensagem.style.display = "block";
+
+
+                cadastroForm.reset();
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>
