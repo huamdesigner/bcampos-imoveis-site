@@ -86,6 +86,30 @@
         box-shadow: 0 0 0 3px rgba(49, 85, 143, 0.10);
     }
 
+    .form-consentimento {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 22px;
+    }
+
+    .form-consentimento input {
+        width: 18px;
+        height: 18px;
+        margin-top: 4px;
+        flex-shrink: 0;
+    }
+
+    .form-consentimento label {
+        color: #5d6572;
+        font-size: 14px;
+    }
+
+    .form-consentimento a {
+        color: #b5262d;
+        font-weight: 600;
+    }
+
     .btn-cadastro {
         width: 100%;
         min-height: 52px;
@@ -254,6 +278,24 @@
 
                 </div>
 
+                <div class="form-consentimento">
+
+                    <input
+                        type="checkbox"
+                        id="consentimento"
+                        name="consentimento"
+                        required>
+
+                    <label for="consentimento">
+
+                        Li e concordo com a
+                        <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>
+                        e autorizo a BCampos Imóveis a entrar em contato comigo pelos dados informados.
+
+                    </label>
+
+                </div>
+
                 <button
                     type="submit"
                     class="btn-cadastro"
@@ -323,6 +365,9 @@ const campoEmail =
 
 const campoTelefone =
     document.getElementById("telefoneCliente");
+
+const campoConsentimento =
+    document.getElementById("consentimento");
 
 
 /* ==========================================
@@ -493,6 +538,24 @@ cadastroForm.addEventListener(
             );
 
             campoTelefone.focus();
+
+            return;
+
+        }
+
+
+        /* ==================================
+           VALIDA CONSENTIMENTO (LGPD)
+        ================================== */
+
+        if (!campoConsentimento.checked) {
+
+            mostrarMensagem(
+                "Para se cadastrar, aceite a Política de Privacidade.",
+                "erro"
+            );
+
+            campoConsentimento.focus();
 
             return;
 
