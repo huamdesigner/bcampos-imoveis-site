@@ -1,204 +1,119 @@
 // =========================================================
-// BCAMPOS IMÓVEIS
-// JavaScript principal
+// BCAMPOS IMÓVEIS — JavaScript principal
 // =========================================================
 
+// Marca que o JS carregou (libera as animações de entrada no CSS)
+document.documentElement.classList.add("js");
 
-// =========================================================
+
+// ---------------------------------------------------------
 // MENU MOBILE
-// =========================================================
+// ---------------------------------------------------------
 
 const menuToggle = document.getElementById("menuToggle");
-
 const nav = document.getElementById("nav");
 
+function definirMenu(aberto) {
+    if (!nav || !menuToggle) return;
+
+    nav.classList.toggle("active", aberto);
+    menuToggle.setAttribute("aria-expanded", String(aberto));
+    menuToggle.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
+    menuToggle.textContent = aberto ? "✕" : "☰";
+}
 
 if (menuToggle && nav) {
 
     menuToggle.addEventListener("click", () => {
-
-        nav.classList.toggle("active");
-
-        const menuAberto =
-            nav.classList.contains("active");
-
-        menuToggle.setAttribute(
-            "aria-expanded",
-            menuAberto
-        );
-
-        menuToggle.setAttribute(
-            "aria-label",
-            menuAberto
-                ? "Fechar menu"
-                : "Abrir menu"
-        );
-
+        definirMenu(!nav.classList.contains("active"));
     });
 
+    // Fecha ao clicar em um link
+    nav.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => definirMenu(false));
+    });
 
-    // Fecha o menu ao clicar em um link
+    // Fecha ao clicar fora
+    document.addEventListener("click", (event) => {
+        if (
+            nav.classList.contains("active") &&
+            !nav.contains(event.target) &&
+            !menuToggle.contains(event.target)
+        ) {
+            definirMenu(false);
+        }
+    });
 
-    document
-        .querySelectorAll(".nav a")
-        .forEach((link) => {
+    // Fecha com a tecla ESC
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && nav.classList.contains("active")) {
+            definirMenu(false);
+            menuToggle.focus();
+        }
+    });
 
-            link.addEventListener("click", () => {
-
-                nav.classList.remove("active");
-
-                menuToggle.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
-
-                menuToggle.setAttribute(
-                    "aria-label",
-                    "Abrir menu"
-                );
-
-            });
-
-        });
-
+    // Fecha ao aumentar a tela
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 768) definirMenu(false);
+    });
 }
 
 
-// =========================================================
+// ---------------------------------------------------------
 // ANO AUTOMÁTICO NO RODAPÉ
-// =========================================================
+// ---------------------------------------------------------
 
 const year = document.getElementById("year");
 
+if (year) year.textContent = new Date().getFullYear();
 
-if (year) {
 
-    year.textContent =
-        new Date().getFullYear();
+// ---------------------------------------------------------
+// SOMBRA NO CABEÇALHO AO ROLAR A PÁGINA
+// ---------------------------------------------------------
 
+const header = document.querySelector(".header");
+
+function atualizarHeader() {
+    if (header) header.classList.toggle("scrolled", window.scrollY > 10);
 }
 
-
-// =========================================================
-// FECHAR MENU AO REDIMENSIONAR A TELA
-// =========================================================
-
-window.addEventListener("resize", () => {
-
-    if (
-        window.innerWidth > 768 &&
-        nav
-    ) {
-
-        nav.classList.remove("active");
-
-        if (menuToggle) {
-
-            menuToggle.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-            menuToggle.setAttribute(
-                "aria-label",
-                "Abrir menu"
-            );
-
-        }
-
-    }
-
-});
+window.addEventListener("scroll", atualizarHeader, { passive: true });
+atualizarHeader();
 
 
-// =========================================================
-// FECHAR MENU AO CLICAR FORA
-// =========================================================
+// ---------------------------------------------------------
+// ANIMAÇÃO DE ENTRADA DOS ELEMENTOS
+// ---------------------------------------------------------
 
-document.addEventListener("click", (event) => {
+const elementos = document.querySelectorAll(".reveal");
 
-    if (
-        !nav ||
-        !menuToggle
-    ) {
-        return;
-    }
+if ("IntersectionObserver" in window) {
 
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const alvo = entry.target;
+                    alvo.classList.add("visible");
+                    observer.unobserve(alvo);
 
-    const clicouNoMenu =
-        nav.contains(event.target);
+                    // Remove o atraso depois da entrada, para não atrasar o efeito de hover
+                    setTimeout(() => { alvo.style.transitionDelay = ""; }, 1000);
+                }
+            });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
 
-    const clicouNoBotao =
-        menuToggle.contains(event.target);
-
-
-    if (
-        nav.classList.contains("active") &&
-        !clicouNoMenu &&
-        !clicouNoBotao
-    ) {
-
-        nav.classList.remove("active");
-
-        menuToggle.setAttribute(
-            "aria-expanded",
-            "false"
-        );
-
-        menuToggle.setAttribute(
-            "aria-label",
-            "Abrir menu"
-        );
-
-    }
-
-});
-
-
-// =========================================================
-// ANIMAÇÃO SUAVE DOS CARDS
-// =========================================================
-
-const cards = document.querySelectorAll(
-    ".service-card, .area-card, .feature"
-);
-
-
-if (
-    "IntersectionObserver" in window
-) {
-
-    const observer =
-        new IntersectionObserver(
-            (entries) => {
-
-                entries.forEach((entry) => {
-
-                    if (entry.isIntersecting) {
-
-                        entry.target.classList.add(
-                            "visible"
-                        );
-
-                        observer.unobserve(
-                            entry.target
-                        );
-
-                    }
-
-                });
-
-            },
-            {
-                threshold: 0.12
-            }
-        );
-
-
-    cards.forEach((card) => {
-
-        observer.observe(card);
-
+    elementos.forEach((el, i) => {
+        // Pequeno atraso escalonado dentro de cada grade de cards
+        const posicao = Array.prototype.indexOf.call(el.parentElement.children, el);
+        el.style.transitionDelay = Math.min(posicao, 5) * 70 + "ms";
+        observer.observe(el);
     });
 
+} else {
+    // Navegadores antigos: mostra tudo direto
+    elementos.forEach((el) => el.classList.add("visible"));
 }
